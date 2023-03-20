@@ -1,5 +1,8 @@
 package u03
 
+import scala.annotation.tailrec
+
+
 object Lists extends App :
 
   // A generic linkedlist
@@ -13,6 +16,12 @@ object Lists extends App :
       case Cons(h, t) => h + sum(t)
       case _ => 0
 
+    @tailrec
+    def get[E](list: List[E], index: Int): Option[E] = (list, index) match
+      case (Nil(), _) => None
+      case (Cons(h, t), 0) => Some(h)
+      case (Cons(_, t), i) => get(t, i - 1)
+
     def map[A, B](l: List[A])(mapper: A => B): List[B] = l match
       case Cons(h, t) => Cons(mapper(h), map(t)(mapper))
       case Nil() => Nil()
@@ -22,9 +31,24 @@ object Lists extends App :
       case Cons(_, t) => filter(t)(pred)
       case Nil() => Nil()
 
+    def drop[A](l: List[A], n: Int): List[A] = (l,n) match
+      case (l, 0) => l
+      case (Nil(), _) => Nil()
+      case (Cons(h, t), n) => drop(t, n-1)
+
+    def append[A](left: List[A], right: List[A]): List[A] = (left, right) match
+      case (Cons(h, Nil()), r) => Cons(h, r)
+      case (Cons(h, t), r) => Cons(h, append(t, r))
+
+    def flatMap[A,B](l: List[A])(f: A => List[B]): List[B] = l match
+      case Nil() => Nil()
+      case Cons(h, t) => append(f(h), flatMap(t)(f))
+
   val l = List.Cons(10, List.Cons(20, List.Cons(30, List.Nil())))
   println(List.sum(l)) // 60
 
   import List.*
 
+
   println(sum(map(filter(l)(_ >= 20))(_ + 1))) // 21+31 = 52
+
