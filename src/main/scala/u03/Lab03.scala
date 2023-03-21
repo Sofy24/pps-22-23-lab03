@@ -60,11 +60,14 @@ object Lab03 extends App :
       case Nil() => Nil()
       case Cons(h, t) => append(f(h), flatMap(t)(f))
 
-    /*def mapSecondVersion[A, B](l: List[A])(mapper: A => B): List[B] =
-      flatMap(l)(mapper)*/
+    def mapSecondVersion[A, B](l: List[A])(mapper: A => B): List[B] = l match
+      case Cons(h, t) => flatMap(l)(h => Cons(mapper(h), Nil()))
+      case Nil() => Nil()
 
-    /*def filterSecondVersion[A](l1: List[A])(pred: A => Boolean): List[A] = l1 match
-      case Cons(h, t) => flatMap(t)(pred(h))*/
+    def filterSecondVersion[A](l1: List[A])(pred: A => Boolean): List[A] = l1 match
+      case Cons(h, t) if pred(h) => flatMap(l1)(h => Cons(h, Nil()))
+      case Cons(h, t) if !pred(h) => filterSecondVersion(t)(pred)
+      case Nil() => Nil()
 
     def max(l: List[Int]): Option[Int] = l match
       case Cons(h, t) => t match
