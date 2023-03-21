@@ -2,14 +2,20 @@ package u03
 
 import org.junit.*
 import org.junit.Assert.*
-import Lists.*
+import Lab03.*
 import u02.Optionals.*
+import u02.AlgebraicDataTypes.*
 
 class Lab03Test:
   import List.*
+  import Person.*
 
   val l: List[Int] = Cons(10, Cons(20, Cons(30, Nil())))
-  val tail = Cons (40 , Nil () )
+  val tail = Cons(40 , Nil() )
+  val people = Cons(Person.Student("Mario", 2000), Cons(Person.Teacher("Luigi", "Storia"), Cons(Person.Teacher("Alessia", "Matematica"), Nil())))
+  val lst = Cons(3, Cons(7, Cons(1, Cons(5, Nil()))))
+
+
 
   @Test def testSum() =
     assertEquals(0, sum(Nil()))
@@ -47,3 +53,14 @@ class Lab03Test:
     assertEquals(Option.Some(25), max(Cons(10, Cons(25, Cons(20, Nil())))))
     assertEquals(Option.None(), max(Nil()))
     assertEquals(Option.Some(70), max(Cons(30, Cons(50, Cons(25, Cons(70, Nil()))))))
+
+  @Test def testCourses() =
+    assertEquals(Cons("Storia", Cons("Matematica", Nil())), fromPersonToCourses(people))
+
+  @Test def testFoldLeft() =
+    assertEquals(-16, foldLeft(lst)(0)( _ - _ ))
+    assertEquals(16, foldLeft(lst)(0)( _ + _ ))
+
+  @Test def testFoldRight() =
+    assertEquals(-8, foldRight(lst)(0)( _ - _ ))
+    assertEquals(16, foldRight(lst)(0)( _ + _ ))
