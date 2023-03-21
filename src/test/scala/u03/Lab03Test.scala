@@ -47,7 +47,7 @@ class Lab03Test:
 
   @Test def testFilterSecondVersion() =
     assertEquals(Cons(20, Cons(30, Nil())), filterSecondVersion(l)(_>=20))
-    //assertEquals(Cons(10, Cons(30, Nil())), filterSecondVersion(l)(_!=20))
+    assertEquals(Cons(10, Cons(30, Nil())), filterSecondVersion(l)(_!=20))
 
   @Test def testMax() =
     assertEquals(Option.Some(25), max(Cons(10, Cons(25, Cons(20, Nil())))))
