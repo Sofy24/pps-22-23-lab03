@@ -5,10 +5,12 @@ import org.junit.Assert.*
 import Lab03.*
 import u02.Optionals.*
 import u02.AlgebraicDataTypes.*
+import u03.Streams.*
 
 class Lab03Test:
   import List.*
   import Person.*
+  import Stream.*
 
   val l: List[Int] = Cons(10, Cons(20, Cons(30, Nil())))
   val tail = Cons(40 , Nil() )
@@ -22,17 +24,17 @@ class Lab03Test:
     assertEquals(60, sum(l))
 
   @Test def testMap() =
-    assertEquals(Cons(11, Cons(21, Cons(31, Nil()))), map(l)(_+1))
-    assertEquals(Cons("10", Cons("20", Cons("30", Nil()))), map(l)(_+""))
+    assertEquals(Cons(11, Cons(21, Cons(31, Nil()))), List.map(l)(_+1))
+    assertEquals(Cons("10", Cons("20", Cons("30", Nil()))), List.map(l)(_+""))
 
   @Test def testFilter() =
-    assertEquals(Cons(20, Cons(30, Nil())), filter(l)(_>=20))
-    assertEquals(Cons(10, Cons(30, Nil())), filter(l)(_!=20))
+    assertEquals(Cons(20, Cons(30, Nil())), List.filter(l)(_>=20))
+    assertEquals(Cons(10, Cons(30, Nil())), List.filter(l)(_!=20))
 
   @Test def testDrop() =
-    assertEquals(Cons(20, Cons(30, Nil())), drop(l, 1))
-    assertEquals(Cons(30, Nil()), drop(l, 2))
-    assertEquals(Nil(), drop(l, 5))
+    assertEquals(Cons(20, Cons(30, Nil())), List.drop(l, 1))
+    assertEquals(Cons(30, Nil()), List.drop(l, 2))
+    assertEquals(Nil(), List.drop(l, 5))
 
   @Test def testAppend() =
     assertEquals(Cons(10, Cons(20, Cons(30, Cons(40, Nil())))), append(l, tail))
@@ -64,3 +66,11 @@ class Lab03Test:
   @Test def testFoldRight() =
     assertEquals(-8, foldRight(lst)(0)( _ - _ ))
     assertEquals(16, foldRight(lst)(0)( _ + _ ))
+
+  @Test def testDropStream() =
+    val s = Stream.take(Stream.iterate(0)(_ + 1))(10)
+    assertEquals(Lists.List.Cons(6, Lists.List.Cons(7, Lists.List.Cons(8, Lists.List.Cons(9, Lists.List.Nil())))), Stream.toList(Stream.drop(s)(6)))
+
+  /*@Test def testConstantStream() =
+    assertEquals(Cons("x", Cons("x", Cons("x", Cons("x", Cons("x", Nil ()))))), constant(Stream.toList(Stream.take(constant("x"))(5))))
+  */
