@@ -71,6 +71,5 @@ class Lab03Test:
     val s = Stream.take(Stream.iterate(0)(_ + 1))(10)
     assertEquals(Lists.List.Cons(6, Lists.List.Cons(7, Lists.List.Cons(8, Lists.List.Cons(9, Lists.List.Nil())))), Stream.toList(Stream.drop(s)(6)))
 
-  /*@Test def testConstantStream() =
-    assertEquals(Cons("x", Cons("x", Cons("x", Cons("x", Cons("x", Nil ()))))), constant(Stream.toList(Stream.take(constant("x"))(5))))
-  */
+  @Test def testConstantStream() =
+    assertEquals(Lists.List.Cons("x", Lists.List.Cons("x", Lists.List.Cons("x", Lists.List.Cons("x", Lists.List.Cons("x", Lists.List.Nil()))))), Stream.toList(Stream.take(constant("x"))(5)))

@@ -41,19 +41,9 @@ object Streams extends App :
       case (Cons(head, tail), n) if n > 1 => drop(tail())(n - 1)
       case (Cons(head, tail), _) => tail()
 
-
-    val corec: Stream[Int] = Stream.cons(1, corec) // {1 ,1 ,1 ,..}
-    println(Stream.toList(Stream.take(corec)(10)))
-
-    def constant[A](s: Stream[A], k: A)(n: Int): Stream[A] = s match
-      case Cons(head, tail) => Stream.map(s)(x => x)
-      case _ => Empty()
-      //val corec: Stream[A] = Stream.cons(k, corec)
-      //Stream.take(corec)(n)
-    
-
-    //Stream . toList ( Stream . take ( constant ("x") ) (5) )
-
+    def constant[A](k: A): Stream[A] =
+      Stream.cons(k, Stream.constant(k))
+        
   end Stream
 
   // var simplifies chaining of functions a bit..
