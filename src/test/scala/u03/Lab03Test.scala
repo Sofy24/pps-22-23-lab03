@@ -5,7 +5,6 @@ import org.junit.Assert.*
 import Lab03.*
 import u02.Optionals.*
 import u02.AlgebraicDataTypes.*
-import u03.Streams.*
 
 class Lab03Test:
   import List.*
@@ -16,6 +15,9 @@ class Lab03Test:
   val tail = Cons(40 , Nil() )
   val people = Cons(Person.Student("Mario", 2000), Cons(Person.Teacher("Luigi", "Storia"), Cons(Person.Teacher("Alessia", "Matematica"), Nil())))
   val lst = Cons(3, Cons(7, Cons(1, Cons(5, Nil()))))
+  val s = Stream.take(Stream.iterate(0)(_ + 1))(10)
+  val n: Int = 0
+  val fibs : Stream[Int] = fib(n)
 
 
 
@@ -68,8 +70,10 @@ class Lab03Test:
     assertEquals(16, foldRight(lst)(0)( _ + _ ))
 
   @Test def testDropStream() =
-    val s = Stream.take(Stream.iterate(0)(_ + 1))(10)
     assertEquals(Lists.List.Cons(6, Lists.List.Cons(7, Lists.List.Cons(8, Lists.List.Cons(9, Lists.List.Nil())))), Stream.toList(Stream.drop(s)(6)))
 
   @Test def testConstantStream() =
     assertEquals(Lists.List.Cons("x", Lists.List.Cons("x", Lists.List.Cons("x", Lists.List.Cons("x", Lists.List.Cons("x", Lists.List.Nil()))))), Stream.toList(Stream.take(constant("x"))(5)))
+
+  @Test def testFibonacci() =
+    assertEquals(Lists.List.Cons(0, Lists.List.Cons(1, Lists.List.Cons(1, Lists.List.Cons(2, Lists.List.Cons(3, Lists.List.Cons(5, Lists.List.Cons(8, Lists.List.Cons(13, Lists.List.Nil())))))))), Stream.toList(Stream.take(fibs)(8)))
